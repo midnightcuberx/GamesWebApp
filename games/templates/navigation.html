@@ -1,0 +1,39 @@
+<div id="myCollapsedSidebar" class="collapsed-sidebar">
+    <!-- <button class="openbtn" onclick="openNav()">☰</button> -->
+    <a href="javascript:void(0)" class="openbtn" onclick="openNav()">☰</a>
+    <a href="{{url_for('home_bp.home')}}">⌂</a>
+    <a href="{{url_for('games_bp.games')}}">⌨</a>
+    <a href="{{url_for('search_bp.search')}}">🔍︎︎</a>
+    <a href="{{url_for('user_bp.wishlist_page')}}">☆</a>
+    <a href="{{url_for('user_bp.favourites_page')}}">♡</a>
+</div>
+
+<div id="myOpenSidebar" class="open-sidebar">
+    <h1 id="logo">ゲ</h1>
+    <a class = "main-nav" href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a class = "main-nav" href="{{url_for('home_bp.home')}}">Home</a>
+    <a class = "main-nav" href="{{url_for('games_bp.games')}}">All Games</a>
+    <a class = "main-nav" href="{{url_for('search_bp.search')}}">Search Games</a>
+    <a class = "main-nav" href="{{url_for('user_bp.wishlist_page')}}">Wishlist</a>
+    <a class = "main-nav" href="{{url_for('user_bp.favourites_page')}}">Favourites</a>
+    <br>
+    <h2 id = "browse">Browse by Genre</h2>
+    {% for genre in dataset_of_genres %}
+        <a class = "genre-text" href = "{{url_for('genres_bp.genre_games', name=genre.genre_name)}}">{{genre.genre_name}}</a>
+    {% endfor %}
+</div>
+
+
+<script>
+    function openNav() {
+        document.getElementById("myOpenSidebar").style.width = "250px";
+        document.getElementById("myCollapsedSidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("myOpenSidebar").style.width = "0px";
+        document.getElementById("myCollapsedSidebar").style.width = "75px";
+        document.getElementById("main").style.marginLeft = "75px";
+    }
+</script>

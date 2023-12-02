@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main>
+    <form class="login-form" method="POST" enctype="multipart/form-data">
+        <!--<input class="login" type="text" name="username" placeholder="username" required>
+        <input class="login" type="password" name="password" placeholder="password" required>
+        <br>
+        <button class="login" type="submit">{{text_type}}</button>-->
+        {{ form.csrf_token }}
+        {{ form.photo }}
+        {{ form.submit }}
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'user_parent.html' %}
+
+{% block form_content %}
+<form action = "{{url_for('user_bp.user', username=username)}}">
+    <button type="submit">Cancel</button>
+</form>
+<form method="POST" id="profile-form">
+    {{form.csrf_token}}
+    <div class="form-group">
+        <label for="bio_description">Editing your bio:</label>
+        {{ form.bio_description(class="review-inputs", placeholder="Write your bio here") }}
+        {% if form.bio_description.errors %}
+            <div class="text-danger">{{ form.bio_description.errors[0] }}</div>
+        {% endif %}
+    </div>
+    {{ form.submit(class="review-submit") }}
+</form>
+{% endblock %}

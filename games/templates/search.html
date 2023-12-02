@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main>
+    <h1>Search for Items</h1>
+<form method="GET" action="{{ url_for('search_bp.perform_search') }}">
+    <input type="text" name="query" placeholder="Enter game name" value="{{ request.args.get('query', '') }}">
+    <label>
+        <select name="genre">
+            <option value="">All Genres</option>
+            {% for genre in dataset_of_genres %}
+                <option value="{{ genre.genre_name }}" {% if genre.genre_name == request.args.get('genre') %}selected{% endif %}>{{ genre.genre_name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        <select name="publisher">
+            <option value="">All Publishers</option>
+            {% for publisher in dataset_of_publishers %}
+                <option value="{{ publisher.publisher_name }}" {% if publisher.publisher_name == request.args.get('publisher') %}selected{% endif %}>{{ publisher.publisher_name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <button type="submit">Search</button>
+</form>
+
+    <h2>Search Results:</h2>
+    <div class="cards">
+        {% for game in games %}
+        {% include 'game_card.html' %}
+        {% endfor %}
+    </div>
+<div class="pagination">
+
+    {% if page > 1 %}
+        <a class = "page-nav" id = "search-previous" href="{{ url_for('search_bp.perform_search', query=request.args.get('query'),
+        genre=request.args.get('genre'), publisher=request.args.get('publisher'), page=page - 1) }}">Previous</a>    {% endif %}
+    <span>Page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+        <a class = "page-nav" id = "search-next" href="{{ url_for('search_bp.perform_search', query=request.args.get('query'),
+        genre=request.args.get('genre'), publisher=request.args.get('publisher'), page=page + 1) }}">Next</a>
+    {% endif %}
+</div>
+</main>
+{% endblock %}

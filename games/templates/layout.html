@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CS235 Game Library</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}" type="text/css">
+</head>
+
+<body>
+    {% include 'navigation.html' %}
+    
+    <div id="main" class="main-wrapper">
+        {% include 'header.html' %}
+        
+        <div class="body-wrapper">
+            <div class="section">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+        
+    </div>
+    {% include 'footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+{% extends 'user_parent.html' %}
+
+{% block form_content %}
+<form action = "{{url_for('user_bp.update_bio', username=username)}}">
+    <button type="submit">Edit Bio</button>
+</form>
+{% endblock %}

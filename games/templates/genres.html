@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main>
+    <br>
+    <h2 class = "header-title genre-title">{{genre.genre_name}} Games</h2>
+    <br>
+    <form method = "GET">
+        <label for="num">NUMBER PER PAGE</label>
+            <select name="num" id="numberSelect">
+                {% for i in range(20,1,-2) %}
+                    <option value="{{i}}" {% if i == games_per_page %} selected {% endif %}>{{i}}</option>
+                {% endfor %}
+            </select>
+        <button type="submit">Apply</button>
+        <div class="right-button">
+            <label for="method">SORT BY</label>
+            <select name="method" id="sortSelect">
+                <option value="name" {% if sort_type == "name" %} selected {% endif %}>Name</option>
+                <option value="date" {% if sort_type == "date" %} selected {% endif %}>Release date</option>
+                <option value="price" {% if sort_type == "price" %} selected {% endif %}>Price</option>
+            </select>
+            <button type="submit">APPLY</button>
+        </div>
+    </form>
+    <br>
+    <div class="cards">
+        {% for game in games %}
+            {% include 'game_card.html' %}
+        {% endfor %}
+    </div>
+    <!--<table>
+        {% for i in range(0, games|length, 2) %}
+            <tr>
+                {% set game = games[i] %}
+                {% set game2 = games[i+1] %}
+                <td><a class = "links" href = "{{url_for('games_bp.view_game', game_id=game.game_id)}}">{{game.title}} ({{game.game_id}})<br><img src = "{{game.image_url}}"></a></td>
+                {% if i+1 < games|length %}
+                    <td><a class = "links" href = "{{url_for('games_bp.view_game', game_id=game2.game_id)}}">{{game2.title}} ({{game2.game_id}})<br><img src = "{{game2.image_url}}"></a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>-->
+    <div class="pagination">
+        <div class="page-left">
+            {% if page > 1 %}
+                <a class = "page-nav" href="{{ url_for('genres_bp.genre_games', name=genre.genre_name, page=1) }}">First</a>
+                <a class = "page-nav" href="{{ url_for('genres_bp.genre_games', name=genre.genre_name, page=page - 1) }}">Previous</a>
+            {% endif %}
+        </div>
+        <span>Page {{ page }} of {{ last }}</span>
+        <div class="page-right">
+            {% if page < last %}
+                <a class = "page-nav" href="{{ url_for('genres_bp.genre_games',  name=genre.genre_name, page=page + 1) }}">Next</a>
+                <a class = "page-nav" href="{{ url_for('genres_bp.genre_games',  name=genre.genre_name, page=last) }}">Last</a>
+            {% endif %}
+        </div>
+    </div>
+</main>
+{% endblock %}

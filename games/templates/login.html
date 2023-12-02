@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main class="login-section">
+    <h2 class="login-form">{{text_type}}</h2>
+    <br>
+    <form class="login-form" method="POST">
+        <!--<input class="login" type="text" name="username" placeholder="username" required>
+        <input class="login" type="password" name="password" placeholder="password" required>
+        <br>
+        <button class="login" type="submit">{{text_type}}</button>-->
+        {{ form.csrf_token }}
+        {{form.username(class_="login")}}
+        {% if username_error %}
+            <p class="error">{{username_error}}</p>
+        {% endif %}
+        {{form.password(class_="login")}}
+        {% if password_error %}
+            <p class="error">{{password_error}}</p>
+        {% endif %}
+        {{form.submit(class_="login login-button")}}
+    </form>
+    <br>
+    {% if text_type == "Login" %}
+        <a class="register-link" href="{{url_for('auth_bp.register')}}"><p>Don't have an account? Click here to register</p></a>
+    {% endif %}
+</main>
+{% endblock %}

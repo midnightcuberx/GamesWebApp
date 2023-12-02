@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<main class="game-wrapper">
+{% include 'basic_game_info.html' %}
+
+<br>
+<h3>Genres:</h3>
+
+<p>{{genres}}</p>
+<br>
+
+<div class="hor-form-wrapper">
+    {% if in_wishlist %}
+    <form method="POST" action="{{ url_for('games_bp.remove_from_wishlist', game_id=game.game_id) }}">
+        <button type="submit" value="wishlist_remove">Remove from wishlist</button>
+    </form>
+    {% else %}
+    <form method="POST" action="{{ url_for('games_bp.add_to_wishlist', game_id=game.game_id) }}">
+        <button type="submit" value="wishlist_add">Add to wishlist</button>
+    </form>
+    {% endif %}
+    {% if in_favourites %}
+    <form method="POST" action="{{ url_for('games_bp.remove_from_favourites', game_id=game.game_id) }}">
+        <button type="submit" value="favourites_remove">Remove from favourites</button>
+    </form>
+    {% else %}
+    <form method="POST" action="{{ url_for('games_bp.add_to_favourites', game_id=game.game_id) }}">
+        <button type="submit" value="favourites_add">Add to favourites</button>
+    </form>
+    {% endif %}
+</div>
+
+<br><br>
+
+<p>Description: {{game.description}}</p>
+
+<h2 class="header-title review-title">Reviews</h2>
+
+{% if game.reviews %}
+    <form method="GET" action="{{ url_for('games_bp.view_game', game_id=game.game_id) }}">
+        <label>
+            <select name="sort_option">
+            <option value="comment_length-ascend" {% if request.args.get('sort_option') == 'comment_length-ascend' %}selected{% endif %}>Sort by Length (Ascending)</option>
+                <option value="comment_length-descend" {% if request.args.get('sort_option') == 'comment_length-descend' %}selected{% endif %}>Sort by Length (Descending)</option>
+
+            <option value="star_ratings-ascend" {% if request.args.get('sort_option') == 'star_ratings-ascend' %}selected{% endif %}>Sort by Stars (Ascending)</option>
+            <option value="star_ratings-descend" {% if request.args.get('sort_option') == 'star_ratings-descend' %}selected{% endif %}>Sort by Stars (Descending)</option>
+            </select>
+        </label>
+        <input type="hidden" name="page" value="{{ request.args.get('page', 1) }}">
+        <button type="submit">Filter</button>
+    </form>
+<ul class="review-list">
+    {% for review in reviews %}
+        <li class="review-item">
+            <span class="review-username">{{ review.user.username }}</span> <br>
+            <p1 class="review-rating">Rating: {{ review.rating }}</p1> <br>
+            <br>
+            <p1 class="review-comment-label"> {{ review.comment }}</p1><br>
+
+        </li>
+    {% endfor %}
+</ul>
+
+        <div class="pagination">
+            {% if page > 1 %}
+                <a class = "page-nav" href="{{ url_for('games_bp.view_game', game_id=game.game_id, sort_option=request.args.get('sort_option'), page=page - 1) }}">Previous</a>
+            {% endif %}
+            <span>Review page - {{ page }} of {{ total_pages }}</span>
+            {% if page < total_pages %}
+                <a class = "page-nav"  href="{{ url_for('games_bp.view_game', game_id=game.game_id, sort_option=request.args.get('sort_option'), page=page + 1) }}">Next</a>
+            {% endif %}
+    </div>
+
+{% else %}
+    <p id = "empty">No reviews for this game yet.</p>
+
+{% endif %}
+
+
+<button class="review-submit" onclick="location.href='{{ url_for('games_bp.review_game', game_id=game.game_id) }}'">Place a review!</button>
+
+</main>
+{% endblock %}

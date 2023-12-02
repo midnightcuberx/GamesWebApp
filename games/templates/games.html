@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main>
+    <br>
+    <div class="selectBar">
+        <form method="GET" action="{{ url_for('games_bp.games') }}">
+            <div class="leftSelectWrapper">
+                <label for="numberSelect">NUMBER PER PAGE</label>
+                <select name="numberSelect" id="numberSelect">
+                    {% for i in range(6, 54, 6) %}
+                    <option value="{{i}}" {% if i == games_per_page %} selected {% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <button class="gameForm" type="submit">APPLY</button>
+            </div>
+            <div class="rightSelectWrapper">
+                <label for="sortSelect">SORT BY</label>
+                <select name="sortSelect" id="sortSelect">
+                    <option value="name" {% if sort_type == "name" %} selected {% endif %}>Name</option>
+                    <option value="date" {% if sort_type == "date" %} selected {% endif %}>Release date</option>
+                    <option value="price" {% if sort_type == "price" %} selected {% endif %}>Price</option>
+                </select>
+                <button class="gameForm" type="submit">APPLY</button>
+            </div>
+        </form>
+    </div>
+    <br>
+    <!-- {% for game in divided_list[current_page] %}
+    <a class = "links" href = "{{url_for('games_bp.view_game', game_id=game.game_id)}}"><p>{{game.title}} ({{game.game_id}}) ({{game.release_date}}) ({{game.price}})</p></a>
+    {% endfor %} -->
+    <div class="cards">
+        {% for game in divided_list[page-1] %}
+        {% include 'game_card.html' %}
+        {% endfor %}
+    </div>
+    
+    <!-- <form method = "GET" class="gameForm">
+        <button name="first" value="{{current_page}}">First</button>
+        <button name="prev", value="{{current_page}}">Previous</button>
+        <div class="right-button">
+            <button name="next" value="{{current_page}}">Next</button>
+            <button name="last" value="{{current_page}}">Last</button>
+        </div>
+    </form> -->
+    <div class="pagination">
+        <div class="page-left">
+            {% if page > 1 %}
+                <a class = "page-nav" href="{{ url_for('games_bp.games', page=1) }}">First</a>
+                <a class = "page-nav" href="{{ url_for('games_bp.games', page=page - 1) }}">Previous</a>
+            {% endif %}
+        </div>
+        <span>Page {{ page }} of {{ last }}</span>
+        <div class="page-right">
+            {% if page < last %}
+                <a class = "page-nav" href="{{ url_for('games_bp.games', page=page + 1) }}">Next</a>
+                <a class = "page-nav" href="{{ url_for('games_bp.games', page=last) }}">Last</a>
+            {% endif %}
+        </div>
+    </div>
+</main>
+{% endblock %}

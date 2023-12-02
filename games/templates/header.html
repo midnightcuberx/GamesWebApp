@@ -1,0 +1,40 @@
+<div class="header-wrapper">
+    <div class="header-title">
+        <h1>CS235 Game Library</h1>
+        <h2>© William Gao | Dennis Hu | Andrew Li</h2>
+        {% if username %}
+            <div class="profile">
+                <!--{if not user.has_pfp}
+                    <a class="profile-links" href="javascript:void(0)" onclick="profileDropDown()"><p id = "profile">{{username[:4]}}</p></a>
+                { else }
+                    <a class="profile-links" href="javascript:void(0)" onclick="profileDropDown()"><img src="{{link}}"></a>
+                {endif}-->
+                <a class="profile-links" href="javascript:void(0)" onclick="profileDropDown()"><p id = "profile">{{username[:4]}}</p><i class="fa fa-caret-down"></i></a>
+            </div>
+            <ul id="dropdown">
+                <a class="profile-links" href="{{url_for('user_bp.user', username=username)}}"><li>Profile</li></a>
+                <a class="profile-links" href="{{url_for('auth_bp.logout')}}"><li>Logout</li></a>
+            </ul>
+        {% else %}
+            <a href="{{url_for('auth_bp.login')}}"><button type="submit" class="show-login">Login</button></a>
+            <a href="{{url_for('auth_bp.register')}}"><button type="submit" class="show-register">Register</button></a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function profileDropDown(){
+       //alert("Hi");
+       x =  document.getElementById("dropdown");
+       if (x.style.display == "none" || x.style.display == ""){
+        x.style.display = "block";
+       } else{
+        x.style.display = "none";
+       }
+    }
+</script>
+<!--<script>
+    function loginFunc(){
+       window.location.href = "{{url_for('auth_bp.login')}}"; 
+    }
+</script>-->

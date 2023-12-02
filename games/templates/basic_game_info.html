@@ -1,0 +1,13 @@
+    <br>
+    <h2 class="header-title genre-title">{{game.title}}</h2>
+    <br>
+    <img class = "game-image" src = "{{game.image_url}}">
+    <br>
+    <h3>Publisher: {{game.publisher.publisher_name}}</h3>
+    <h3>Release date: {{game.release_date}}</h3>
+    <h3>Price: ${{game.price}}</h3>
+    {% if avg_rating %}
+    <h3>Avg Rating: {{avg_rating}} / 5.0</h3>
+    {% else %}
+        <h3>No Ratings Yet!</h3>
+    {% endif %}

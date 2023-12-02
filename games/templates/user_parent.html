@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<main>
+    <div id="profile-info-wrapper">
+        <div id="user-photo">
+            <h1 id="user-text">{{username}}</h1>
+        </div>
+        <br>
+        <div id="profile-info-box-content" class="profile-content-box">
+            <h1>Profile</h1>
+            <br>
+            <p>{{ user_bio }}</p>
+            <br>
+            {% block form_content %} {% endblock %}
+        </div>
+    </div>
+    <div id="wishlist-wrapper" class="profile-content-box">
+        <h1 class="profile-section-header">My Wishlist
+            <form class="profile-section-button" action = "{{url_for('user_bp.wishlist_page')}}">
+                <button type="submit">Show all</button>
+            </form>
+        </h1>
+        <div class="profile-game-grid-wrapper">
+            {% for game in wishlist_list %}
+            {% set game_link = url_for('user_bp.remove_from_wishlist', game_id=game.game_id) %}
+            {% include 'game_card_profile.html' %}
+            {% endfor %}
+            {% include 'game_add_card.html' %}
+        </div>
+    </div>
+    <div id="favourites-wrapper" class="profile-content-box">
+        <h1 class="profile-section-header">My Favourite Games
+            <form class="profile-section-button" action = "{{ url_for('user_bp.favourites_page') }}">
+                <button type="submit">Show all</button>
+            </form>
+        </h1>
+        <div class="profile-game-grid-wrapper">
+            {% for game in favourites_list %}
+            {% set game_link = url_for('user_bp.remove_from_favourites', game_id=game.game_id) %}
+            {% include 'game_card_profile.html' %}
+            {% endfor %}
+            {% include 'game_add_card.html' %}
+        </div>
+    </div>
+    <div id="reviewed-wrapper" class="profile-content-box">
+        <h1 class="profile-section-header">My Reviewed Games</h1>
+        <div class="profile-game-grid-wrapper">
+            {% for game in reviews_list %}
+            {% include 'game_card.html' %}
+            {% endfor %}
+            {% include 'game_add_card.html' %}
+        </div>
+    </div>
+</main>
+{% endblock %}

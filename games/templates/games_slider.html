@@ -1,0 +1,17 @@
+<div class="slider-wrapper">
+    <div class="slider">
+        {% set games_shown = 5 %}
+        {% for i in range(games_shown) %}
+        {% set game = games[i] %}
+        {% include 'game_card.html' %}
+        {% endfor %}
+    </div>
+    <div class="slider-nav">
+        {% for i in range(games_shown) %}
+        <a href="#{{games[i].title}}"></a>
+        {% endfor %}
+    </div>
+</div>
+<br>
+<br>
+<br>

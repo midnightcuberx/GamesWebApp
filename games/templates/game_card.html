@@ -1,0 +1,10 @@
+<div class="cardContainer {{input_class}}" id="{{game.title}}">
+    <a class = "card" href = "{{url_for('games_bp.view_game', game_id=game.game_id)}}">
+        <div class="container">
+            <img class="cardImg" src="{{game.image_url}}">
+        </div>
+        <div class="details">
+            <h3>{{game.title}}</h3>
+        </div>
+    </a>
+</div>

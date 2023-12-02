@@ -1,0 +1,34 @@
+
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<main class="game-wrapper">
+{% include 'basic_game_info.html' %}
+
+<br>
+  <h2> Leave your review for {{ game.title }}</h2>
+    <form method="POST">
+
+      {{form.game_id}}
+      {{form.csrf_token}}
+    <div class="form-group">
+      <label for="review_comment">Your Review:</label>
+      {{ form.review_comment(class="review-inputs", placeholder="Write your review here") }}
+      {% if form.review_comment.errors %}
+        <div class="text-danger">{{ form.review_comment.errors[0] }}</div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label for="rating">Rating (1-5):</label>
+      {{ form.rating(class="review-inputs", placeholder="Enter rating") }}
+      {% if form.rating.errors %}
+        <div class="text-danger">{{ form.rating.errors[0] }}</div>
+      {% endif %}
+    </div>
+    {{ form.submit(class="review-submit") }}
+  </form>
+
+
+</main>
+{% endblock %}
