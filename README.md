@@ -1,3 +1,4 @@
+## Games Web App
 
 A Game Library web application that implements Python's Flask framework as well as libraries such as jinja templating. It contains features such as  a game search function, browse by genre function, and a page to browse all games. Architectural design patterns and priciples including the use of a Repository and the principle of Single Responsibility. Each page also has a service layer to provide service to each request function. This application uses Flask BluePrints to maintan a seperation of concerns between application functions. Testing includes unit and end to end testing using pytest.
 
